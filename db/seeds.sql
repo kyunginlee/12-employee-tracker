@@ -23,20 +23,21 @@ VALUES (001, "Associate", "55000", "1"),
        (010, "Associate Director", "1250000", "5");
 
 INSERT INTO employees (id, first_name, last_name, role_id, manager_id)
-VALUES (001, "Miriam", "Baxter", "01", "555"),
-       (002, "Ray", "Harmon", "01", "555"),
-       (003, "Xiomara", "Bridges", "02", "555"),
-       (004, "Waylon", "Dean", "02", "888"),
-       (005, "Peter", "Gregory", "03", "888"),
-       (006, "Rebekah", "Finley", "03", "888"),
-       (007, "Amiah", "Sampson", "04", "888"),
-       (008, "Eileen", "Gentry", "04", "999"),
-       (009, "Haylie", "Gallegos", "05", "1010"),
+VALUES (001, "Miriam", "Baxter", "01", "005"),
+       (002, "Ray", "Harmon", "01", "005"),
+       (003, "Xiomara", "Bridges", "02", "005"),
+       (004, "Waylon", "Dean", "02", "008"),
+       (005, "Peter", "Gregory", "03", "008"),
+       (006, "Rebekah", "Finley", "03", "008"),
+       (007, "Amiah", "Sampson", "04", "008"),
+       (008, "Eileen", "Gentry", "04", "009"),
+       (009, "Haylie", "Gallegos", "05", "010"),
        (010, "Aidan", "Lozano", "05", NULL);
 
 -- commands
 -- mysql -u root -p
 -- SOURCE schema.sql;
+-- SOURCE seeds.sql;
 -- select * from products;
 
 -- SELECT database();
