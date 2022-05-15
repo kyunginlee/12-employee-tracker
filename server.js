@@ -1,48 +1,27 @@
 // install packages required
 const mysql = require('mysql2');
-const Sequelize = require('sequelize');
 const inquirer = require('inquirer');
 const fs = require('fs');
 
 
-require('dotenv').config()
-// Import the connection object
-const connection = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    // Database location
-    host: 'localhost',
-    dialect: 'mysql',
-    // default port for the classic MySQL protocol
-    port: 3306
-    // logging: false
-  },
-  console.log(`Connected to the tracker_db database.`),
-);
-
-startApp();
-
-
-// // Connect to mysql TODO: enter your mysql password
-// const db = mysql.createConnection(
-//     {
-//       host: 'localhost',
-//       // MySQL username,
-//       user: 'root',
-//       // MySQL password
-//       password: 'xxxxx',
-//       database: 'tracker_db'
-//     },
-//     console.log(`Connected to the tracker_db database.`)
-//   );
+// Connect to mysql TODO: enter your mysql password
+const connection = mysql.createConnection(
+    {
+      host: 'localhost',
+      // MySQL username,
+      user: 'root',
+      // MySQL password
+      password: 'xxxx',
+      database: 'tracker_db'
+    },
+    console.log(`Connected to the tracker_db database.`)
+  );
 
 // establish connection otherwise 
-  // db.connect(function(err) {
-  //   if (err) throw err;
-  //   startApp();
-  // }); 
+  connection.connect(function(err) {
+    if (err) throw err;
+    startApp();
+  }); 
 
 // prompts requiring user input
 function startApp() {
@@ -95,7 +74,7 @@ function startApp() {
       break;
 
       case "close":
-        sequelize.connectionManager.close()
+        connection.connectionManager.close()
         .then(() => 
         console.log('Shutting down...'));
       break;
@@ -103,22 +82,52 @@ function startApp() {
   })
 };
 
-const viewDept = (res) => {
-  let query = "SELECT dept_name FROM department";
+const viewDept = () => {
+  let query = "SELECT dept_id, dept_name FROM department";
   // for loop to access all elements of he returned reponse
   connection.query(query, function(err, res) {
-    for (var i = 0; i < res.length; i++) {
-      console.log(res[i].name);
-    }
+    console.table(res);
+    startApp();
   });
 }
 
-const viewRole = (res) => {
-  let query = "SELECT title FROM roles";
+const viewRole = () => {
+  let query = "SELECT title, role_id, dept_id, salary FROM roles";
   // for loop to access all elements of he returned reponse
   connection.query(query, function(err, res) {
-    for (var i = 0; i < res.length; i++) {
-      console.log(res[i].name);
-    }
+    console.table(res);
+    startApp();
   });
 }
+
+const viewEmp = () => {
+  let query = "SELECT id, first_name, last_name, title, dept_name, salary, manager_id FROM employees";
+  // for loop to access all elements of he returned reponse
+  connection.query(query, function(err, res) {
+    console.table(res);
+    startApp();
+  });
+}
+
+const addEmp = () => {
+  inquirer
+    .prompt({
+      name: "addEmp",
+      type: "input",
+      message: "Enter Employee full name (excluding any middle names)"
+    })
+
+    .then(function(input) {
+      console.log(input);
+      let name = input.addEmp;
+      let fullName = name.split(" ");
+      console.log(fullName + " has been added to the employee database.");
+      let query = "INSERT INTO employees (first_name, last_name) VALUES ?";
+      connection.query(query, [[fullName]], function(err, res) {
+        if (err) throw err;
+        console.log(err);
+      });
+      startApp();
+    });
+}
+
