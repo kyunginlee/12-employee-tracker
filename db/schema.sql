@@ -5,6 +5,7 @@ USE tracker_db;
 
 CREATE TABLE department (
   id INT NOT NULL,
+  dept_name VARCHAR(30),
   emp_name VARCHAR(30),
   PRIMARY KEY (id)
 );

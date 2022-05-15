@@ -1,14 +1,14 @@
-INSERT INTO department (id, emp_name)
-VALUES (001, "Miriam Baxter"),
-       (002, "Ray Harmon"),
-       (003, "Xiomara Bridges"),
-       (004, "Waylon Dean"),
-       (005, "Peter Gregory"),
-       (006, "Rebekah Finley"),
-       (007, "Amiah Sampson"),
-       (008, "Eileen Gentry"),
-       (009, "Haylie  Gallegos"),
-       (010, "Aidan Lozano");
+INSERT INTO department (id, dept_name, emp_name)
+VALUES (001, "Admin", "Miriam Baxter"),
+       (002, "Admin", "Ray Harmon"),
+       (003, "Sales", "Xiomara Bridges"),
+       (004, "Sales", "Waylon Dean"),
+       (005, "Sales", "Peter Gregory"),
+       (006, "Engineering", "Rebekah Finley"),
+       (007, "Engineering", "Amiah Sampson"),
+       (008, "Product", "Eileen Gentry"),
+       (009, "Product", "Haylie  Gallegos"),
+       (010, "Delivery", "Aidan Lozano");
        
 INSERT INTO roles (id, title, salary, department_id)
 VALUES (001, "Associate", "55000", "1"),
