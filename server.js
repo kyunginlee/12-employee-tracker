@@ -121,8 +121,11 @@ const addEmp = () => {
       console.log(input);
       let name = input.addEmp;
       let fullName = name.split(" ");
-      console.log(fullName + " has been added to the employee database.");
       let query = "INSERT INTO employees (first_name, last_name) VALUES ?";
+
+
+      console.log(fullName + " has been added to the employee database.");
+      // let query = "INSERT INTO employees (first_name, last_name) VALUES ?";
       connection.query(query, [[fullName]], function(err, res) {
         if (err) throw err;
         console.log(err);
@@ -130,4 +133,32 @@ const addEmp = () => {
       startApp();
     });
 }
+const updateEmp = () => {
+  inquirer
+  .prompt({
+    name: "updateEmp",
+    type: "input",
+    message: "Please provide employee ID of the employee to update",
+  })
+  .then(function (input) {
+    let id = input.id;
 
+    inquirer
+      .prompt({
+        name: "title",
+        type: "input",
+        message: "Enter new title of the employee",
+      })
+      .then(function (input) {
+        let title = input.title;
+
+        let query = "UPDATE employee SET title? WHERE title=?";
+        connection.query(query, [id, title], function (err, res) {
+          if (err) {
+            console.log(err);
+          }
+          startApp();
+        });
+      });
+  });
+}
