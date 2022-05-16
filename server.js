@@ -74,9 +74,7 @@ function startApp() {
       break;
 
       case "close":
-        connection.connectionManager.close()
-        .then(() => 
-        console.log('Shutting down...'));
+        connection.end();
       break;
     }
   })
