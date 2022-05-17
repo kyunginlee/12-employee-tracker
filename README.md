@@ -17,6 +17,10 @@
   ---
   On cloning the app from the github link advised to a local repository, ensure databases are sourced-  initialise a sql session and source schema.sql and seeds.sql files. On successful initialisation, ensure all packages required to run the app are installed by completing an 'npm i' command from the root directory. Type your sql password in line 14 of the server.js file, replacing the 'XXXX' placeholder. On successful installation, type the command 'npm start' to launch and follow prompts.
 
+https://user-images.githubusercontent.com/99236183/168726646-bbb59032-10a1-411b-aeb2-13f1ca9d7519.mp4
+
+
+
   
   ## [Usage](#contents)
   ---
