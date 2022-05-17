@@ -81,7 +81,7 @@ function startApp() {
 };
 
 const viewDept = () => {
-  let query = "SELECT dept_id, dept_name FROM department";
+  let query = "SELECT * FROM department";
   // for loop to access all elements of he returned reponse
   connection.query(query, function(err, res) {
     console.table(res);
@@ -90,7 +90,7 @@ const viewDept = () => {
 }
 
 const viewRole = () => {
-  let query = "SELECT title, role_id, dept_id, salary FROM roles";
+  let query = "SELECT id, title, salary, department_id FROM roles";
   // for loop to access all elements of he returned reponse
   connection.query(query, function(err, res) {
     console.table(res);
@@ -99,7 +99,7 @@ const viewRole = () => {
 }
 
 const viewEmp = () => {
-  let query = "SELECT id, first_name, last_name, title, dept_name, salary, manager_id FROM employees";
+  let query = "SELECT first_name, last_name, role_id, manager_id FROM employees";
   // for loop to access all elements of he returned reponse
   connection.query(query, function(err, res) {
     console.table(res);
@@ -134,24 +134,25 @@ const addEmp = () => {
 const updateEmp = () => {
   inquirer
   .prompt({
-    name: "updateEmp",
+    name: "employeeUpdate",
     type: "input",
-    message: "Please provide employee ID of the employee to update",
+    message: "id of employee to update",
   })
-  .then(function (input) {
-    let id = input.id;
+  .then(function (choice) {
+    let id = choice.id;
 
     inquirer
       .prompt({
-        name: "title",
+        name: "newRoleId",
         type: "input",
-        message: "Enter new title of the employee",
+        message: "Please enter the employee's new role id",
       })
-      .then(function (input) {
-        let title = input.title;
+      .then(function (choice) {
+        let roleId = choice.roleId;
 
-        let query = "UPDATE employee SET title? WHERE title=?";
-        connection.query(query, [id, title], function (err, res) {
+        let query = "UPDATE employees SET role_id=? WHERE id=?";
+        console.log(" Employee role has been updated.");
+        connection.query(query, [roleId, id], function (err, res) {
           if (err) {
             console.log(err);
           }
@@ -159,4 +160,48 @@ const updateEmp = () => {
         });
       });
   });
+}
+
+const addDept = () => {
+  inquirer
+    .prompt({
+      name: "addDepartment",
+      type: "input",
+      message: "Enter New department name"
+    })
+
+    .then(function(answer) {
+      console.log(answer);
+      let deptName = answer.addDepartment;
+      // let firstAndLastName = name.split(" ");
+      console.log(deptName);
+      let query = "INSERT INTO department (name) VALUES ?";
+      connection.query(query, [deptName], function(err, res) {
+        if (err) throw err;
+        console.log(err);
+      });
+      startApp();
+    });
+}
+
+const addRole = () => {
+  inquirer
+    .prompt({
+      name: "addRole",
+      type: "input",
+      message: "Enter New role name"
+    })
+
+    .then(function(answer) {
+      console.log(answer);
+      let roleName = answer.addRole;
+      // let firstAndLastName = name.split(" ");
+      console.log(roleName);
+      let query = "INSERT INTO roles (title) VALUES ?";
+      connection.query(query, [roleName], function(err, res) {
+        if (err) throw err;
+        console.log(err);
+      });
+      startApp();
+    });
 }

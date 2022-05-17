@@ -1,4 +1,4 @@
-INSERT INTO department (dept_name)
+INSERT INTO department (name)
 VALUES
     ( "Admin"),
     ("Sales"),
@@ -6,34 +6,20 @@ VALUES
     ("Product"),
     ("Delivery");
 
-INSERT INTO roles (role_id, title, salary, dept_id)
+INSERT INTO roles (title, salary, department_id)
 VALUES 
-    ("11", "Associate", "55000", "1"),
-    ("22", "Senior Associate", "70000", "2"),
-    ("33", "Associate Manager", "85000", "2"),
-    ("44", "Manager", "95000", "3"),
-    ("55", "Senior Manager", "105000", "4"),
-    ("66", "Associate Director", "1250000", "5");
+    ("Associate", 55000, 1),
+    ("Senior Associate", 70000, 2),
+    ("Associate Manager", 85000, 2),
+    ("Manager", 95000, 3),
+    ("Senior Manager", 105000, 4),
+    ("Associate Director", 1250000, 5);
 
-INSERT INTO employees (first_name, last_name, manager_id)
+INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES 
-    ("Miriam", "Baxter", "005"),
-    ("Ray", "Harmon", "005"),
-    ("Xiomara", "Bridges", "005"),
-    ("Waylon", "Dean", "008"),
-    ("Peter", "Gregory", "008"),
-    ("Rebekah", "Finley", "008"),
-    ("Amiah", "Sampson", "008"),
-    ("Eileen", "Gentry", "009"),
-    ("Haylie", "Gallegos", "010"),
-    ("Aidan", "Lozano", NULL);
-
-
--- commands
--- mysql -u root -p
--- SOURCE schema.sql;
--- SOURCE seeds.sql;
--- select * from products;
-
--- SELECT database();
--- DESCRIBE categories;
+    ("Miriam", "Baxter", 1, null),
+    ("Ray", "Harmon", 2, 1),
+    ("Xiomara", "Bridges", 3, null),
+    ("Waylon", "Dean", 4, 3),
+    ("Peter", "Gregory", 5, null),
+    ("Rebekah", "Finley", 6, 5);
