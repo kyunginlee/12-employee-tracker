@@ -11,7 +11,7 @@ const connection = mysql.createConnection(
       // MySQL username,
       user: 'root',
       // TODO: TYPE YOUR SQL PASSWORD BELOW
-      password: 'XXXX',
+      password: 'Tollg2919',
       database: 'tracker_db'
     },
     console.log(`Connected to the tracker_db database.`)
@@ -90,7 +90,7 @@ const viewDept = () => {
 }
 
 const viewRole = () => {
-  let query = "SELECT id, title, salary, department_id FROM roles";
+  let query = "SELECT roles.title, employees.role_id, department.name, roles.salary FROM roles INNER JOIN department ON roles.id = department.id INNER JOIN employees ON department.id = employees.id";
   // for loop to access all elements of he returned reponse
   connection.query(query, function(err, res) {
     console.table(res);
@@ -99,7 +99,7 @@ const viewRole = () => {
 }
 
 const viewEmp = () => {
-  let query = "SELECT first_name, last_name, role_id, manager_id FROM employees";
+  let query = "SELECT employees.id, employees.first_name, employees.last_name, roles.title, department.name, roles.salary, employees.manager_id FROM roles INNER JOIN department ON roles.id = department.id INNER JOIN employees ON department.id = employees.id";
   // for loop to access all elements of he returned reponse
   connection.query(query, function(err, res) {
     console.table(res);
@@ -173,9 +173,8 @@ const addDept = () => {
     .then(function(answer) {
       console.log(answer);
       let deptName = answer.addDepartment;
-      // let firstAndLastName = name.split(" ");
-      console.log(deptName);
-      let query = "INSERT INTO department (name) VALUES ?";
+      let query = "INSERT INTO department (name) VALUES (?)";
+      console.log("New department has been added.");
       connection.query(query, [deptName], function(err, res) {
         if (err) throw err;
         console.log(err);
@@ -189,19 +188,30 @@ const addRole = () => {
     .prompt({
       name: "addRole",
       type: "input",
-      message: "Enter New role name"
+      message: "Enter new role name"
     })
+    .then(function (answer) {
+      let roleName = answer.addRole;
+
+      inquirer
+      .prompt({
+        name: "addSalary",
+        type: "input",
+        message: "Enter the salary for this new role"
+      })
 
     .then(function(answer) {
-      console.log(answer);
-      let roleName = answer.addRole;
-      // let firstAndLastName = name.split(" ");
-      console.log(roleName);
-      let query = "INSERT INTO roles (title) VALUES ?";
-      connection.query(query, [roleName], function(err, res) {
+      let roleSal = answer.addSalary;
+
+      
+      
+      let query = "INSERT INTO roles (title, salary) VALUES (? , ?)";
+      console.log("New role and corresponding salary has been added.");
+      connection.query(query, [roleName, roleSal], function(err, res) {
         if (err) throw err;
         console.log(err);
       });
       startApp();
     });
+  })
 }
